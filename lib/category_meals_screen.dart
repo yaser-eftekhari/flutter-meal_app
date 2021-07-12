@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 
 class CategoryMealsScreen extends StatelessWidget {
-  final String title;
 
-  CategoryMealsScreen({required this.title});
+  CategoryMealsScreen();
 
   @override
   Widget build(BuildContext context) {
+    final routeArgs = ModalRoute.of(context)!.settings.arguments as Map<String, String>;
+    final title = routeArgs['title'];
+
     return Scaffold(
       appBar: AppBar(
-        title: Text("The Recipes for $title"),
+        title: Text(title!),
       ),
       body: Center(
         child: Text("Recipe for this category!"),
