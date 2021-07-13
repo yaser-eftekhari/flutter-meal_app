@@ -17,6 +17,30 @@ class RecipeItem extends StatelessWidget {
     required this.imageUrl,
   });
 
+  String get complexityText {
+    switch(complexity) {
+      case Complexity.Hard:
+        return "Hard";
+      case Complexity.Challenging:
+        return "Challenging";
+      default:
+        return "Simple";
+    }
+  }
+
+  String get affordabilityText {
+    switch(affordability) {
+      case Affordability.Affordable:
+        return "Affordable";
+      case Affordability.Luxurious:
+        return "Luxurious";
+      case Affordability.Pricey:
+        return "Pricey";
+      default:
+        return "Unknown";
+    }
+  }
+
   void selectRecipe() {}
 
   @override
@@ -44,8 +68,61 @@ class RecipeItem extends StatelessWidget {
                     width: double.infinity,
                     fit: BoxFit.cover,
                   ),
+                ),
+                Positioned(
+                  bottom: 20,
+                  right: 10,
+                  child: Container(
+                    width: 300,
+                    color: Colors.black54,
+                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                    child: Text(
+                      title,
+                      style: TextStyle(
+                        fontSize: 26,
+                        color: Colors.white,
+                      ),
+                      softWrap: true,
+                      overflow: TextOverflow.fade,
+                    ),
+                  ),
                 )
               ],
+            ),
+            Padding(
+              padding: const EdgeInsets.all(20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Row(
+                    children: [
+                      Icon(Icons.schedule),
+                      SizedBox(
+                        width: 6,
+                      ),
+                      Text("$prepTime min"),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Icon(Icons.work),
+                      SizedBox(
+                        width: 6,
+                      ),
+                      Text(complexityText),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Icon(Icons.attach_money),
+                      SizedBox(
+                        width: 6,
+                      ),
+                      Text(affordabilityText),
+                    ],
+                  )
+                ],
+              ),
             )
           ],
         ),
