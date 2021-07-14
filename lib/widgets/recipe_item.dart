@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../models/recipe.dart';
+import '../screens/recipe_detail_screen.dart';
 
 class RecipeItem extends StatelessWidget {
+  final String id;
   final String title;
   final String imageUrl;
   final Affordability affordability;
@@ -10,6 +12,7 @@ class RecipeItem extends StatelessWidget {
   final int prepTime;
 
   RecipeItem({
+    required this.id,
     required this.complexity,
     required this.affordability,
     required this.title,
@@ -18,7 +21,7 @@ class RecipeItem extends StatelessWidget {
   });
 
   String get complexityText {
-    switch(complexity) {
+    switch (complexity) {
       case Complexity.Hard:
         return "Hard";
       case Complexity.Challenging:
@@ -29,7 +32,7 @@ class RecipeItem extends StatelessWidget {
   }
 
   String get affordabilityText {
-    switch(affordability) {
+    switch (affordability) {
       case Affordability.Affordable:
         return "Affordable";
       case Affordability.Luxurious:
@@ -41,12 +44,20 @@ class RecipeItem extends StatelessWidget {
     }
   }
 
-  void selectRecipe() {}
+  void selectRecipe(BuildContext context) {
+    Navigator.of(context).pushNamed(
+      RecipeDetailScreen.routeName,
+      arguments: {
+        'id': id,
+        'title': title,
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: selectRecipe,
+      onTap: () => selectRecipe(context),
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
