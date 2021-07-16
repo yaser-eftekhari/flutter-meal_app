@@ -59,7 +59,6 @@ class _CategoryMealsScreenState extends State<CategoryMealsScreen> {
               prepTime: categoryMeals[index].prepTime,
               imageUrl: categoryMeals[index].imageUrl,
               id: categoryMeals[index].id,
-              removeRecipe: _removeRecipe,
             );
           },
           itemCount: categoryMeals.length,

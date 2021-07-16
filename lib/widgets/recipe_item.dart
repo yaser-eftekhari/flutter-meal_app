@@ -10,7 +10,6 @@ class RecipeItem extends StatelessWidget {
   final Affordability affordability;
   final Complexity complexity;
   final int prepTime;
-  final Function removeRecipe;
 
   RecipeItem({
     required this.id,
@@ -19,7 +18,6 @@ class RecipeItem extends StatelessWidget {
     required this.title,
     required this.prepTime,
     required this.imageUrl,
-    required this.removeRecipe,
   });
 
   String get complexityText {
@@ -56,8 +54,8 @@ class RecipeItem extends StatelessWidget {
       // then is called when the page is not needed anymore which is when the page has popped back.
       // the value is whatever has been passed from the other page in the pop method.
     ).then((value) {
-      if(value != null) // if pop was used instead of back button
-        removeRecipe(value);
+      // if(value != null) // if pop was used instead of back button
+        // removeRecipe(value);
     });
   }
 

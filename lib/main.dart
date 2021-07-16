@@ -25,26 +25,45 @@ class _MyAppState extends State<MyApp> {
     "lactose": false,
   };
 
+  List<Recipe> _availableRecipe = DUMMY_RECIPES;
+  List<Recipe> _favoriteRecipe = [];
+
+  void _handleFavorites(String recipeId) {
+    final index =
+        _favoriteRecipe.indexWhere((element) => element.id == recipeId);
+
+    // need to add the recipe to the list
+    if (index == -1) {
+      setState(() {
+        _favoriteRecipe.add(
+            _availableRecipe.firstWhere((element) => element.id == recipeId));
+      });
+    } else {
+      // remove from the list
+      setState(() {
+        _favoriteRecipe.removeAt(index);
+      });
+    }
+  }
+
+  bool _isFavorite(String recipeId) {
+    return _favoriteRecipe.any((element) => element.id == recipeId);
+  }
+
   void _setFilters(Map<String, bool> filterData) {
     setState(() {
       _filters = filterData;
-      
-      _availableRecipe = DUMMY_RECIPES.where((recipe) {
-        if(_filters["vegetarian"]! && !recipe.isVegetarian)
-          return false;
-        if(_filters["vegan"]! && !recipe.isVegan)
-          return false;
-        if(_filters["lactose"]! && !recipe.isLactoseFree)
-          return false;
-        if(_filters["gluten"]! && !recipe.isGlutenFree)
-          return false;
 
-        return  true;
+      _availableRecipe = DUMMY_RECIPES.where((recipe) {
+        if (_filters["vegetarian"]! && !recipe.isVegetarian) return false;
+        if (_filters["vegan"]! && !recipe.isVegan) return false;
+        if (_filters["lactose"]! && !recipe.isLactoseFree) return false;
+        if (_filters["gluten"]! && !recipe.isGlutenFree) return false;
+
+        return true;
       }).toList();
     });
   }
-
-  List<Recipe> _availableRecipe = DUMMY_RECIPES;
 
   @override
   Widget build(BuildContext context) {
@@ -74,9 +93,10 @@ class _MyAppState extends State<MyApp> {
       // home: CategoriesScreen(),
       // home: TabsScreen(),
       routes: {
-        "/" : (ctx) => TabsScreen(),
-        CategoryMealsScreen.routeName : (ctx) => CategoryMealsScreen(_availableRecipe),
-        RecipeDetailScreen.routeName : (ctx) => RecipeDetailScreen(),
+        "/": (ctx) => TabsScreen(_favoriteRecipe),
+        CategoryMealsScreen.routeName: (ctx) =>
+            CategoryMealsScreen(_availableRecipe),
+        RecipeDetailScreen.routeName: (ctx) => RecipeDetailScreen(_handleFavorites, _isFavorite),
         FiltersScreen.routeName: (ctx) => FiltersScreen(_setFilters, _filters),
       },
       onUnknownRoute: (settings) {

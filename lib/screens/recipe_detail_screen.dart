@@ -4,6 +4,10 @@ import '../dummy_data.dart';
 
 class RecipeDetailScreen extends StatelessWidget {
   static const routeName = "/recipe-detail";
+  final Function(String) _handleFavorite;
+  final Function(String) _isFavorite;
+
+  RecipeDetailScreen(this._handleFavorite, this._isFavorite);
 
   @override
   Widget build(BuildContext context) {
@@ -92,9 +96,10 @@ class RecipeDetailScreen extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.delete),
+        child: Icon(_isFavorite(recipeId!) ? Icons.star : Icons.star_border),
         onPressed: () {
           // here we can pass anything back to the previous page; map, list, variable, etc.
+          _handleFavorite(recipeId);
           Navigator.of(context).pop(recipeId);
         },
       ),
