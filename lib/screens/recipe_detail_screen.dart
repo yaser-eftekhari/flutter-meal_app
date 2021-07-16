@@ -5,8 +5,6 @@ import '../dummy_data.dart';
 class RecipeDetailScreen extends StatelessWidget {
   static const routeName = "/recipe-detail";
 
-  RecipeDetailScreen() {}
-
   @override
   Widget build(BuildContext context) {
     final routeArgs =
@@ -92,6 +90,13 @@ class RecipeDetailScreen extends StatelessWidget {
             ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.delete),
+        onPressed: () {
+          // here we can pass anything back to the previous page; map, list, variable, etc.
+          Navigator.of(context).pop(recipeId);
+        },
       ),
     );
   }
